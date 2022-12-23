@@ -25,7 +25,9 @@ const SignInWithOAuth = () => {
       } = signIn;
 
       const result = await AuthSession.startAsync({
-        authUrl: externalVerificationRedirectURL.toString(),
+        authUrl: externalVerificationRedirectURL
+          ? externalVerificationRedirectURL.toString()
+          : "",
         returnUrl: redirectUrl,
       });
 
