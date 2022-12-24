@@ -15,3 +15,126 @@ model Post {
     title   String
     content String
 }
+
+model UserFavouriteExercise {
+  id        String  @id @default(cuid())
+  exercise  Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId String
+  userId    String
+  favouritedAt DateTime @default(now())
+
+  @@unique([exerciseId, userId])
+}
+
+model Exercise {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  title       String
+  summary     String
+  description String?
+  duration    Int?
+
+  authorId    String
+  
+  image       String?
+  video       String?
+
+  workout     Workout?
+
+  favourites  UserFavouriteExercise[]
+  logs        Log[]
+  tags        Tag[]
+  sessions    WorkoutSession[]
+}
+
+model Log {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  dateLogged DateTime @default(now())
+
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId String
+
+  userId     String
+
+  completePerc Int?
+  level        Level?
+  comment      String?
+  weight       Int?
+}
+
+model Tag {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  exercises   Exercise[]
+  sessions    WorkoutSession[]
+}
+
+enum WorkOutTypes {
+  TIMER
+  CLIMBER
+  REPREST
+}
+
+model Workout {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  type        WorkOutTypes
+  duration    Int?
+
+  repDuration Int?
+  sets        Int?
+  setTitles   String[]
+  reps        Int?
+  setsRest    Int?
+  repsRest    Int?
+  resistance  String?
+  effort      String?
+  focus       String?
+
+  authorId    String
+  
+  image       String?
+  video       String?
+
+  exercise    Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  exerciseId  String @unique
+}
+
+enum Level {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum Category {
+  CONDITIONING
+  ENDURANCE
+  FLEXIBILITY
+  STRENGTH
+  TECHNIQUE
+  OPEN
+  MINDSET
+  FINGERS
+  POWER
+  OTHER
+}
+
+model WorkoutSession {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  authorId     String
+  level        Level?
+  tags         Tag[]
+  category     Category
+  title        String
+  description  String?
+  duration     Int?
+  image        String?
+  exercises    Exercise[]
+}

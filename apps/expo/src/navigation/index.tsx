@@ -7,7 +7,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { HomeScreen } from "../screens/home";
+import { WorkoutScreen } from "../screens/workout";
+import { ExerciseScreen } from "../screens/exercise";
+import { ExercisesScreen } from "../screens/exercises";
 import { SignInScreen } from "../screens/signin";
 
 export default function Navigation() {
@@ -20,6 +22,16 @@ export default function Navigation() {
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function ExercisesStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="exercises" component={ExercisesScreen} />
+      <Stack.Screen name="exercise" component={ExerciseScreen} />
+      <Stack.Screen name="workout" component={WorkoutScreen} />
+    </Stack.Navigator>
+  );
+}
 
 const RootNavigator = () => {
   const { isSignedIn } = useUser();
@@ -54,7 +66,7 @@ const RootNavigator = () => {
         >
           <Tab.Screen
             name="home"
-            component={HomeScreen}
+            component={ExercisesStack}
             options={{ headerShown: false }}
           />
           <Tab.Screen
