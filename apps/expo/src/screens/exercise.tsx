@@ -39,7 +39,11 @@ export function ExerciseScreen({ route, navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           className="flex h-16 flex-col items-center justify-center rounded-md border p-2"
-          onPress={() => console.log("log workout")}
+          onPress={() =>
+            navigation.navigate("log", {
+              workout: exercise.workout,
+            })
+          }
         >
           <>
             <Ionicons name="clipboard-outline" />

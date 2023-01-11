@@ -7,6 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import { LogScreen } from "../screens/log";
 import { WorkoutScreen } from "../screens/workout";
 import { ExerciseScreen } from "../screens/exercise";
 import { ExercisesScreen } from "../screens/exercises";
@@ -29,6 +30,7 @@ function ExercisesStack() {
       <Stack.Screen name="exercises" component={ExercisesScreen} />
       <Stack.Screen name="exercise" component={ExerciseScreen} />
       <Stack.Screen name="workout" component={WorkoutScreen} />
+      <Stack.Screen name="log" component={LogScreen} />
     </Stack.Navigator>
   );
 }
